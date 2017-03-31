@@ -8,7 +8,7 @@ const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const app = express();
 
-app.use('/assets', express.stats(path.resolve(`${__dirname}/../hosted/`)));
+app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
 app.use('/', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../hosted/index.html`));
 });

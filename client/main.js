@@ -32,6 +32,11 @@ const keyUpHandler = (e) => {
   else if(keyPressed === 68 || keyPressed === 39) {
     character.moveRight = false;
   }
+  // SPACEBAR
+  if(keyPressed === 32) {
+    character.jumping = true;
+    sendJump();
+  }
 };
 
 // Handle character movement with mouse
@@ -42,15 +47,12 @@ const mouseMoveHandler = (e) => {
   // If the mouse is to the left of the character
   if(x < character.x + 50) {
     character.moveLeft = true;
+    character.moveRight = false;
   }
   // If the mouse is to the right of the character
-  else if(x > character.x + 50) {
+  else if (x > character.x + 50){
     character.moveRight = true;
-  }
-  // If the mouse is centered under the character
-  else {
     character.moveLeft = false;
-    character.moveRight = false;
   }
 };
 
@@ -71,11 +73,13 @@ const init = () => {
   
   socket.on('joined', setUser);
   socket.on('updatedMovement', update);
+  socket.on('jumping', update);
+  socket.on('falling', update);
   socket.on('disconnect', removeUser);
   
   document.body.addEventListener('keydown', keyDownHandler);
   document.body.addEventListener('keyup', keyUpHandler);
-  canvas.addEventListener('movemove', mouseMoveHandler);
+  canvas.addEventListener('mousemove', mouseMoveHandler);
   canvas.addEventListener('mouseleave', mouseLeaveHandler);
 };
 

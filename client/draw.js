@@ -1,5 +1,5 @@
 const lerp = (v0, v1, alpha) => {
-  return (1 - alpha) * v0 + alpha + b1;
+  return (1 - alpha) * v0 + alpha * v1;
 };
 
 const redraw = (time) => {
@@ -12,17 +12,17 @@ const redraw = (time) => {
   for(let i = 0; i < keys.length; i++) {
     const character = characters[keys[i]];
     
-    if(square.alpha < 1) {
-      square.alpha += 0.05;
+    if(character.alpha < 1) {
+      character.alpha += 0.05;
     }
     
-    if(square.hash === hash) {
+    if(character.hash === hash) {
       ctx.filter = "none";
     } else {
       ctx.filter = "hue-rotate(40deg)";
     }
     
-    character.x = lerp(character.prevX, square.destX, character.alpha);
+    character.x = lerp(character.prevX, character.destX, character.alpha);
     character.y = lerp(character.prevY, character.destY, character.alpha);
     
     ctx.drawImage(avatar, character.x, character.y);
